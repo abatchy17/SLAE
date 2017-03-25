@@ -4,13 +4,17 @@
 ;       nasm -felf32 FuckTheWorldPuts.asm && gcc FuckTheWorldPuts.o && ./FuckTheWorldPuts
 ; ---------------------------------------------------------------------------------------
 
-global main		; Entry point
-extern puts		; External function
+global main		; Entry point for ld linker
+extern puts		; C call
 
 section .text	; Text segment, code resides here
 
 main:
-	ret
+        push    msg		; Push message address onto stack
+        call    puts		; Call C function
+        pop     eax		; Clean up stack
+        mov     eax, 0	; Set exit status
+        ret
 
 section .data
-    msg     db      "Fuck the world. And you.", 0
+        msg     db      "Fuck the world. And you.", 0
