@@ -9,12 +9,12 @@ section .text
 
 _start:
 
-	mov eax, 0xb00b1e5	; （。 ㅅ 。）
+	mov eax, 0xb00b1e5		; （。 ㅅ 。）
 
 	push ax				; (esp-2): 0xb1e5 
 	pop bx				; esp: <empty>
 	
-	push eax				; (esp-4): 0xb00b1e5
+	push eax			; (esp-4): 0xb00b1e5
 	pop ecx				; esp: <empty>
 
 	; exit program
