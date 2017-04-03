@@ -11,7 +11,7 @@ section .text            ; Text segment, code resides here
 main:
         push    msg      ; Push message address onto stack
         call    puts     ; Call C function
-        pop     eax      ; Clean up stack
+        add     esp, 4   ; Clean up stack
         mov     eax, 0   ; Set exit status
         ret
 
