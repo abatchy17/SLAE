@@ -15,7 +15,6 @@ PrintMessage:
     mov        ecx, message ; Message address
     mov        edx, mlen    ; Message length
     int        0x80
-
     ret                 
 
 _start:

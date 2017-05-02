@@ -14,7 +14,6 @@ PrintMessage:
     mov        ebx, 0x1     ; fd = 1 (STDOUT)
     mov        edx, mlen    ; Message length
     int        0x80
-
     ret
 
 _start:

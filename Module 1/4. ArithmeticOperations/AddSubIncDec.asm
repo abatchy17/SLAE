@@ -38,8 +38,7 @@ _start:
     inc al                  ; AL = 1
     dec al                  ; AL = 0, ZF = 1
 
-    ; exit program
-
+    ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80

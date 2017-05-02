@@ -1,7 +1,8 @@
 ; MulDiv.asm
 ; By Abatchy
 ;
-;   nasm -felf32 MulDiv.asm && ld -o MulDiv MulDiv.o
+; nasm -felf32 MulDiv.asm && ld -o MulDiv MulDiv.o && gdb ./MulDiv
+; ---------------------------------------------------------------------------------------
 
 global _start
 
@@ -10,7 +11,7 @@ section .text
 _start:
 
     ; MUL instruction
-    ; AH/AL, DX/AX, EDX/EAX
+    ; Result: AH/AL, DX/AX, EDX/EAX
 
     mov eax, 0
 
@@ -41,9 +42,7 @@ _start:
     mov bx, 0x2
     div bx                  ; AX = 0x91a, DX = 0x1
 
-    ; exit program
-
+    ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80
-    

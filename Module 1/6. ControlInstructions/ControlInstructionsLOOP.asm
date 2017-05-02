@@ -1,7 +1,8 @@
 ; ControlInstructionsLOOP.asm
 ; By Abatchy
 ;
-;    nasm -felf32 ControlInstructionsLOOP.asm && ld -o ControlInstructionsLOOP ControlInstructionsLOOP.o
+; nasm -felf32 ControlInstructionsLOOP.asm && ld -o ControlInstructionsLOOP ControlInstructionsLOOP.o && ./ControlInstructionsLOOP
+; ---------------------------------------------------------------------------------------
 
 global _start
 
@@ -37,8 +38,7 @@ PrintMessage:
     pop ecx
     LOOP PrintMessage
 
-    ; exit program
-    
+    ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80

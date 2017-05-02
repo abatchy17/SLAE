@@ -1,7 +1,8 @@
 ; ControlInstructionsJMP.asm
 ; By Abatchy
 ;
-;    nasm -felf32 ControlInstructionsJMP.asm && ld -o ControlInstructionsJMP ControlInstructionsJMP.o
+; nasm -felf32 ControlInstructionsJMP.asm && ld -o ControlInstructionsJMP ControlInstructionsJMP.o && ./ControlInstructionsJMP
+; ---------------------------------------------------------------------------------------
 
 global _start
 
@@ -36,8 +37,8 @@ PrintMessage:
     pop edx
     dec edx
     JNZ PrintMessage
-    ; exit program
-    
+
+    ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80

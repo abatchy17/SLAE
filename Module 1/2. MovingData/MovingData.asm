@@ -1,7 +1,8 @@
 ; MovingData.asm
 ; By Abatchy
 ;
-;   nasm -felf32 MovingData.asm && ld -o MovingData MovingData.o
+; nasm -felf32 MovingData.asm && ld -o MovingData MovingData.o && gdb ./MovingData
+; ---------------------------------------------------------------------------------------
 
 global _start
 
@@ -23,8 +24,7 @@ _start:
     mov word [var], 5      ; var: 0x0005 0xddcc 0xffee 0x2211
     mov dword [var], 5     ; var: 0x00000005 0x2211ffee
 
-    ; exit program
-    
+   ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80

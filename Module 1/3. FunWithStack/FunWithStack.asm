@@ -1,7 +1,8 @@
 ; FunWithStack.asm
 ; By Abatchy
 ;
-;    nasm -felf32 FunWithStack.asm && ld -o FunWithStack FunWithStack.o
+; nasm -felf32 FunWithStack.asm && ld -o FunWithStack FunWithStack.o && gdb ./FunWithStack
+; ---------------------------------------------------------------------------------------
 
 global _start
 
@@ -23,8 +24,7 @@ _start:
     pop ax              ; (esp-4): 0xcc 0xdd 0xaa 0xbb, ax: 0xaa 0xbb
     pop edx             ; esp: <empty>, edx: 0xcc 0xdd 0xaa 0xbb
     
-    ; exit program
-    
+    ; exit(0)
     mov eax, 1
     mov ebx, 0
     int 0x80
