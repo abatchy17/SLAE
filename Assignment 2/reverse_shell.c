@@ -5,7 +5,7 @@
 
 int client_sockid;  // sockfd for client
 int host_sockid;    // sockfd for host
-    
+
 struct sockaddr_in hostaddr;            // sockaddr struct 
 
 int main()
